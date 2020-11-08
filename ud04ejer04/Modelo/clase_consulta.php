@@ -39,7 +39,6 @@ class Consulta
                 echo "<tr><td>" . $fila['id'] . "</td><td>" . $fila['titulo'] . "</td><td>" . $fila['autor'] . "</td> <td>" . $fila['paginas'] . "</td> </tr>";
         }
         
-        //return $rows;
     }
 }
 ?>

@@ -10,7 +10,7 @@
     
     <?php
 
-        require_once('clase_consulta.php');
+        require_once('Modelo/clase_consulta.php');
 
         //Comenzamos insertando los libros:
         $modelo = new Conexion();
@@ -23,14 +23,8 @@
             $autor = $_POST['autor'];
             $paginas = $_POST['paginas'];
             
-            $insertar = $conexion->insertarLibros($id, $titulo, $autor, $paginas);
-
-            if($resultado){
-                echo "<meta http-equiv='refresh' content='0'>";
-            }
-            
         }
-    ?>
+    ?> 
 
         <form name="input" action="" method="post">
             <table id="form">
@@ -88,7 +82,6 @@
 
 
     <?php
-
 
         echo "<div class='tabla'>
         <table border=2>
