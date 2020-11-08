@@ -5,12 +5,13 @@
     {
         // El usuario acaba de intentar conectarse
         $usuario = $_POST['usuario'];
-        $contrasena = sha1($_POST['contrasena']);
+        $contrasena = $_POST['contrasena'];
+        $contrasena_encristada = sha1($contrasena);
 
         // Conectamos con la Base de Datos y comprobamos la identidad del usuario
         $conexion = new mysqli('localhost','root','','bdlibros');
 
-        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND contrasena = '$contrasena'";
+        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND contrasena = '$contrasena_encristada'";
 
         $consulta = $conexion->query($sql);
         // Si existe un registro, el usuario ha proporcionado las credenciales correctas
@@ -43,8 +44,7 @@ if (isset($_SESSION['nombre'])) {
     header("Location:pagina.php");
 }else{
     if (isset($usuario)){
-    // el usuario ha intentado conectarse y no lo ha conseguido
-    // echo 'No has conseguido acceder al sistema.<br>';
+
 ?>
         <script>
         var mensaje = document.getElementById('intro');
