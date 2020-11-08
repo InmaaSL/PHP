@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,32 +24,44 @@
         $usuario = $_POST['usuario'];
         $contrasena = $_POST['contrasena'];
         $contrasena_encristada = sha1($contrasena);
-        
-        $sql = "INSERT INTO usuarios (usuario, contrasena) VALUES (?,?)";
-        $resultado = mysqli_prepare($conexion, $sql);
 
-        $ok = mysqli_stmt_bind_param($resultado, "ss", $usuario, $contrasena_encristada);
+        $user = "SELECT usuario FROM usuarios WHERE usuario = '$usuario'";
+        $consulta = $conexion->query($user);
 
-        $ok = mysqli_stmt_execute($resultado);
+        if($consulta->fetch_assoc() == null){
 
-        if (!$ok){
-?>
-            <script> 
-            alert("Ha ocurrido un problema en el registro");
-            </script>
-<?php
+            $sql = "INSERT INTO usuarios (usuario, contrasena) VALUES (?,?)";
+            $resultado = mysqli_prepare($conexion, $sql);
+    
+            $ok = mysqli_stmt_bind_param($resultado, "ss", $usuario, $contrasena_encristada);
+    
+            $ok = mysqli_stmt_execute($resultado);
+    
+            if (!$ok){
+    ?>
+                <script> 
+                alert("Ha ocurrido un problema en el registro");
+                </script>
+    <?php
             }else{
-?>
-            <script>
-            alert("Usuario regitrado");
-            </script>
-<?php
+    ?>
+                <script>
+                alert("Usuario regitrado");
+                </script>
+    <?php
                 echo "<meta http-equiv='refresh' content='0'>";
                 mysqli_stmt_close($resultado);
             }
             mysqli_close($conexion);
-        
-    }
+            
+        } else {
+    ?>
+            <script> 
+            alert("Ya existe dicho usuario");
+            </script>
+    <?php
+        }
+    }  
 ?>
 
     <h1>Registrame</h1>
@@ -70,7 +80,5 @@
         </table>
         <input type="submit" value="Regístrame" name="enviar"/>
     </form>
-    
-    
 </body>
 </html>
