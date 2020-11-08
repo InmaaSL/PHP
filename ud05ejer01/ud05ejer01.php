@@ -8,6 +8,52 @@
     <title>UD 5 Ejercicio 1</title>
 </head>
 <body>
+
+<?php
+    $conexion = mysqli_connect("localhost", "root", "");
+    $db_nombre = "bdlibros";
+
+    if(mysqli_connect_errno()){
+        echo "Existe un problema con la conexión...";
+        exit();
+    }
+
+    mysqli_select_db($conexion, $db_nombre) or die ("NO encuentro la base de datos.");
+    
+
+    if(!empty($_POST['usuario']) && !empty($_POST['contrasena'])) 
+    {
+        $usuario = $_POST['usuario'];
+        $contrasena = $_POST['contrasena'];
+        $contrasena_encristada = sha1($contrasena);
+        
+        $sql = "INSERT INTO usuarios (usuario, contrasena) VALUES (?,?)";
+        $resultado = mysqli_prepare($conexion, $sql);
+
+        $ok = mysqli_stmt_bind_param($resultado, "ss", $usuario, $contrasena_encristada);
+
+        $ok = mysqli_stmt_execute($resultado);
+
+        if (!$ok){
+?>
+            <script> 
+            alert("Ha ocurrido un problema en el registro");
+            </script>
+<?php
+            }else{
+?>
+            <script>
+            alert("Usuario regitrado");
+            </script>
+<?php
+                echo "<meta http-equiv='refresh' content='0'>";
+                mysqli_stmt_close($resultado);
+            }
+            mysqli_close($conexion);
+        
+    }
+?>
+
     <h1>Registrame</h1>
     <form action="" method="post">
         <table>
@@ -22,8 +68,9 @@
                 <td><?php if (isset($_POST['enviar']) && empty($_POST['contrasena'])) echo "<span style='color:red'> Debe introducir una contraseña</span>" ?></td>
             </tr>
         </table>
-        <input type="submit" value="Instroducir libros" name="enviar"/>
+        <input type="submit" value="Regístrame" name="enviar"/>
     </form>
+    
     
 </body>
 </html>
