@@ -1,4 +1,31 @@
 <!DOCTYPE html>
+<?php
+    session_start();
+    if (!empty($_POST['usuario']) && !empty($_POST['contrasena']))
+    {
+        // El usuario acaba de intentar conectarse
+        $usuario = $_POST['usuario'];
+        $contrasena = sha1($_POST['contrasena']);
+
+        // Conectamos con la Base de Datos y comprobamos la identidad del usuario
+        $conexion = new mysqli('localhost','root','','bdlibros');
+
+        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND contrasena = '$contrasena'";
+
+        $consulta = $conexion->query($sql);
+        // Si existe un registro, el usuario ha proporcionado las credenciales correctas
+        $resultado = $consulta->fetch_assoc();
+        if ($resultado != null){
+            // Guardamos los datos en la sesión
+            $_SESSION['nombre'] = $resultado['nombre'];
+            $_SESSION['lectura'] = $resultado['lectura'];
+            $_SESSION['escritura'] = $resultado['escritura'];
+            $_SESSION['administracion'] = $resultado['administracion'];
+            header("Location:pagina.php");
+        }
+    }
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,9 +33,26 @@
     <title>Login</title>
 </head>
 <body>
-    <h1>Introduce tus credenciales: </h1>
 
-    <h5>Introduce tus credenciales para entrar</h5>
+<h1>Introduce tus credenciales: </h1>
+
+<div id="intro" style= 'color:blue'> Introduce tus credenciales para entrar: </div>
+    
+<?php
+if (isset($_SESSION['nombre'])) {
+    header("Location:pagina.php");
+}else{
+    if (isset($usuario)){
+    // el usuario ha intentado conectarse y no lo ha conseguido
+    // echo 'No has conseguido acceder al sistema.<br>';
+?>
+        <script>
+        var mensaje = document.getElementById('intro');
+        mensaje.innerHTML = "<spam style='color:red'>Datos incorrectos. Prueba de nuevo.</spam>"; 
+        </script>
+<?php
+    }
+?>
 
     <form action="" method="post">
         <table>
@@ -23,13 +67,15 @@
                 <td><?php if (isset($_POST['enviar']) && empty($_POST['contrasena'])) echo "<span style='color:red'> Debes introducir una contraseña</span>" ?></td>
             </tr>
         </table>
-        <input type="submit" value="Regístrame" name="enviar"/>
+        <input type="submit" value="Entrar" name="Entrar"/>
     </form>
+<?php
+}
+?>
 
-    <div> 
+    <div>
         ¿Aún no te has registrado? 
-        <a href="regitros.php">¡Regístrate!</a>
+        <a href="registros.php">¡Regístrate!</a>
     </div>
-
 </body>
 </html>
