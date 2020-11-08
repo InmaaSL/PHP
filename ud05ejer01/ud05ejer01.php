@@ -80,5 +80,6 @@
         </table>
         <input type="submit" value="Regístrame" name="enviar"/>
     </form>
+    
 </body>
 </html>
