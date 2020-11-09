@@ -5,20 +5,19 @@
     {
         // El usuario acaba de intentar conectarse
         $usuario = $_POST['usuario'];
-        $contrasena = $_POST['contrasena'];
-        $contrasena_encristada = sha1($contrasena);
+        $contrasena = sha1($_POST['contrasena']);
 
         // Conectamos con la Base de Datos y comprobamos la identidad del usuario
         $conexion = new mysqli('localhost','root','','bdlibros');
 
-        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND contrasena = '$contrasena_encristada'";
+        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND contrasena = '$contrasena'";
 
         $consulta = $conexion->query($sql);
         // Si existe un registro, el usuario ha proporcionado las credenciales correctas
         $resultado = $consulta->fetch_assoc();
         if ($resultado != null){
             // Guardamos los datos en la sesión
-            $_SESSION['nombre'] = $resultado['nombre'];
+            $_SESSION['usuario'] = $resultado['usuario'];
             $_SESSION['lectura'] = $resultado['lectura'];
             $_SESSION['escritura'] = $resultado['escritura'];
             $_SESSION['administracion'] = $resultado['administracion'];
@@ -36,20 +35,19 @@
 <body>
 
 <h1>Introduce tus credenciales: </h1>
-
-<div id="intro" style= 'color:blue'> Introduce tus credenciales para entrar: </div>
     
 <?php
-if (isset($_SESSION['nombre'])) {
+if (isset($_SESSION['usuario'])) {
     header("Location:pagina.php");
 }else{
     if (isset($usuario)){
-
 ?>
-        <script>
-        var mensaje = document.getElementById('intro');
-        mensaje.innerHTML = "<spam style='color:red'>Datos incorrectos. Prueba de nuevo.</spam>"; 
-        </script>
+        <div id="intro" style= 'color:red'> Datos incorrectos. Prueba de nuevo. </div>
+
+<?php
+    } else {
+?>
+    <div id="intro" style= 'color:blue'> Introduce tus credenciales para entrar: </div>
 <?php
     }
 ?>
@@ -72,7 +70,6 @@ if (isset($_SESSION['nombre'])) {
 <?php
 }
 ?>
-
     <div>
         ¿Aún no te has registrado? 
         <a href="registros.php">¡Regístrate!</a>

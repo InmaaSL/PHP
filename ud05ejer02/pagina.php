@@ -1,11 +1,20 @@
 <?php
     session_start();
 
-    if (!isset ($_SESSION['nombre'])){
+    if (!isset ($_SESSION['usuario'])){
     header("Location:login.php");
     }
-    echo "¡Bienvenido, ". $_SESSION['nombre'] ."!<br>";
-    echo "<a href='logout.php'>Cerrar Sesión</a>";
+    echo "¡Bienvenido, ". $_SESSION['usuario'] ."! En esta página puedes: "; 
+
+    if ($_SESSION['lectura'] == 1)
+        echo ' (ver)';
+    if ($_SESSION['escritura'] == 1)
+        echo ' (escribir)';
+    if ($_SESSION['administracion'] == 1)
+        echo ' (eliminar)';
+
+    echo " libros. <br> Tu última conexión fue el día: ";
+    echo " <br> <a href='logout.php'>Cerrar Sesión</a>";
 ?>
 
 
