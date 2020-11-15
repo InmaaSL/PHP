@@ -7,7 +7,7 @@
         if (isset($_COOKIE['ultimoLogeo'])) {
             $ultimoLogeo = $_COOKIE['ultimoLogeo'];
         }
-        setcookie("ultimoLogeo", time(), time()+60*60*24*365);
+        setcookie('ultimoLogeo', time(), time()+60*60*24*365);
     }
 ?>
 
@@ -41,62 +41,67 @@
 
 
     if (isset($ultimoLogeo)) {
+        
         echo " libros. <br> Tu última conexión fue el día: " . @date("d/m/y \a \l\a\s H:i", $ultimoLogeo);
     }else{
         echo " libros. <br> ¡Bienvenido por primera vez!";
+        
     }
         
     echo " <br> <a href='logout.php'>Cerrar Sesión</a>";
 
-    if(!empty($_POST['id']) && !empty($_POST['autor']) && !empty($_POST['titulo']) && !empty($_POST['paginas'])) 
+    if(!empty($_GET['id']) && !empty($_GET['autor']) && !empty($_GET['titulo']) && !empty($_GET['paginas'])) 
     {
-        $id = $_POST['id'];
-        $titulo = $_POST['titulo'];
-        $autor = $_POST['autor'];
-        $paginas = $_POST['paginas'];
+        $id = $_GET['id'];
+        $titulo = $_GET['titulo'];
+        $autor = $_GET['autor'];
+        $paginas = $_GET['paginas'];
 
         $sql = "INSERT INTO libros (id, titulo, autor, paginas) VALUES (?,?,?,?)";
         $resultado = $conexion->prepare($sql);
         $resultado->bind_param("issi", $id, $titulo, $autor, $paginas);
         $resultado->execute();
-
+        
         if($resultado){
-            echo "<meta http-equiv='refresh' content='0'>";
+            // echo "<meta http-equiv='refresh' content='0'>";
+            mysqli_stmt_close($resultado);
+            header("Location:pagina.php");
         }
+        
     }
 ?>
 
     <h1>Tabla de libros</h1>
 
-    <form name="input" action="" method="post">
+    <form name="input" action="" method="get">
         <table id="form">
             <tr>
                 <td> Id: </td>
                 <td> <input type="text" name="id" 
                 <?php if ($_SESSION['lectura'] === 1){ echo "disabled";}?>
-                value = "<?php if (isset($_POST['id'])) echo $_POST['id']; ?>"/> </td>
-                <td>  <?php if (isset($_POST['enviar']) && empty($_POST['id'])) echo "<span style='color:red'> Debe introducir el id</span>" ?> </td>
+                value = "<?php if (isset($_GET['id'])) echo $_GET['id']; ?>"/> </td>
+                <td>  <?php if (isset($_GET['enviar']) && empty($_GET['id'])) echo "<span style='color:red'> Debe introducir el id</span>" ?> </td>
             </tr>
             <tr>
                 <td> Título: </td>
                 <td> <input type="text" name="titulo" 
                 <?php if ($_SESSION['lectura'] === 1){ echo "disabled";}?>
-                value = "<?php if (isset($_POST['titulo'])) echo $_POST['titulo']; ?>"/> </td>
-                <td> <?php if (isset($_POST['enviar']) && empty($_POST['titulo'])) echo "<span style='color:red'> Debe introducir un titulo</span>" ?> </td>
+                value = "<?php if (isset($_GET['titulo'])) echo $_GET['titulo']; ?>"/> </td>
+                <td> <?php if (isset($_GET['enviar']) && empty($_GET['titulo'])) echo "<span style='color:red'> Debe introducir un titulo</span>" ?> </td>
             </tr>
             <tr>
                 <td> Autor: </td>
                 <td> <input type="text" name="autor" 
                 <?php if ($_SESSION['lectura'] === 1){ echo "disabled";}?>
-                value = "<?php if (isset($_POST['autor'])) echo $_POST['autor']; ?>"/> </td>
-                <td> <?php if (isset($_POST['enviar']) && empty($_POST['autor'])) echo "<span style='color:red'> Debe introducir un autor</span>" ?> </td>
+                value = "<?php if (isset($_GET['autor'])) echo $_GET['autor']; ?>"/> </td>
+                <td> <?php if (isset($_GET['enviar']) && empty($_GET['autor'])) echo "<span style='color:red'> Debe introducir un autor</span>" ?> </td>
             </tr>
             <tr>
                 <td> Páginas: </td>
                 <td><input type="text" name="paginas" 
                 <?php if ($_SESSION['lectura'] === 1){ echo "disabled";}?>
-                value = "<?php if (isset($_POST['paginas'])) echo $_POST['paginas']; ?>"/> </td>
-                <td> <?php if (isset($_POST['enviar']) && empty($_POST['paginas'])) echo "<span style='color:red'> Debe introducir el número de páginas del libro</span>" ?></td>
+                value = "<?php if (isset($_GET['paginas'])) echo $_GET['paginas']; ?>"/> </td>
+                <td> <?php if (isset($_GET['enviar']) && empty($_GET['paginas'])) echo "<span style='color:red'> Debe introducir el número de páginas del libro</span>" ?></td>
             </tr>
             <tr>
                 <td> <input type="submit" 
@@ -112,6 +117,8 @@
     $registros = mysqli_prepare($conexion, $sql);
     $registros->execute();
     $registros->bind_result($id, $titulo, $autor, $paginas);
+
+
 
     echo "<br><div class='tabla'>
     <table border=2>
@@ -129,12 +136,14 @@
         {
             echo "<tr><td>" . $id . " </td><td>" . $titulo . " </td><td>". $autor ."</td><td> ". $paginas . "</td>";
             if($_SESSION['administracion'] == 1){
-                echo "<td><a href='eliminar.php?id=<?=$id?>'>Eliminar</a></td>";
+                echo "<td><a href='eliminar.php?id=$id'>Eliminar</a></td>";
             }
             echo "</tr>";
         }
 
         echo "</table>";
+                    
+
 
         //IMPORTANTE: Cerramos el objeto $resultado
         mysqli_stmt_close($registros);
