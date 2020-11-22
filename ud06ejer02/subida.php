@@ -1,38 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php
-require_once("fichero.php");
-    // Parámetros de la función: nombre de la imagen, nombre final en local, ancho y alto
-    function miniatura($name_org, $name_dst, $ancho, $alto){
-        // Separamos el nombre y la extensión en un array de 2 elementos
-        $arrNombre = explode(".", $name_dst);
-        $nombre = $arrNombre[0];
-        $extension = $arrNombre[1];
-
-        // Creamos una nueva imagen, para cada tipo de extensión posible
-        if($extension=="jpg" || $extension=="jpeg") $source = imagecreatefromjpeg($name_org);
-        elseif($extension=="png") $source = imagecreatefrompng($name_org);
-        elseif($extension=="gif") $source = imagecreatefromgif($name_org);
-
-        // Creamos el thumbnail vacio
-        $thumb = imagecreatetruecolor($ancho, $alto);
-        $ancho_orig = imagesx($source);
-        $alto_orig = imagesy($source);
-
-        // Copiamos la imagen en un thumbnail pasándole los parámetros necesarios
-        imagecopyresampled($thumb, $source, 0, 0, 0, 0, $ancho, $alto, $ancho_orig, $alto_orig);
-
-        // Exportamos al formato elegido (Con el formato jpg o jpeg podemos elegir calidad).
-        if($extension=="jpg" || $extension=="jpeg") imagejpeg($thumb, $name_dst, 90);
-        elseif($extension=="png") imagepng($thumb, $name_dst);
-        elseif($extension=="gif") imagegif($thumb, $name_dst);
-    }
+<?php
 
     // Comprobamos si hay un error al subirlo
     if ($_FILES['imagen']['error'] != UPLOAD_ERR_OK) {
@@ -73,67 +39,64 @@ require_once("fichero.php");
             $nombre = time() . "_" .$nombre;
         } 
 
-        $miniatura200 = "200_".$nombre;
-        if (is_file($miniatura200)===true) 
-        {
-            $miniatura200 = time() . "_" . $miniatura200;
-        }
-        
-        $miniatura120 = "120_".$nombre;
-        if (is_file($miniatura120)===true) 
-        {
-            $miniatura120 = time() . "_" . $miniatura120;
-        } 
-        
+        // $miniatura120 = "120_".$nombre;
+        // if (is_file($miniatura120)===true) 
+        // {
+        //     $miniatura120 = time() . "_" . $miniatura120;
+        // } 
 
-
+        // $miniatura200 = "200_".$nombre;
+        // if (is_file($miniatura200)===true) 
+        // {
+        //     $miniatura200 = time() . "_" . $miniatura200;
+        // }
+        
         // Movemos el fichero a su nueva ubicación
         // move_uploaded_file ( string $filename , string $destination ) : bool
         if (move_uploaded_file($_FILES['imagen']['tmp_name'], $nombre))
         {
             // Llamamos dos veces a la función
-            miniatura($nombre, , 120, 120);
-            miniatura($nombre, $miniatura200, 200, 200);
+
+            header("Location:fichero.php");
 
             // Mostramos el archivo gif subido
             // $tipoImagen = $_FILES['imagen']['tmp_name'];
             // switch ($tipoImagen) {
             //     case 'image/gif':
             //         header("Content-type: image/gif");
-            //         $fp120 = fopen($miniatura120, 'rb');
-            //         $contenido120 = fread($fp120, filesize($miniatura120));
-            //         fclose ($fp120);
-            //         echo $contenido120;
+                    // $fp120 = fopen($miniatura120, 'rb');
+                    // $contenido120 = fread($fp120, filesize($miniatura120));
+                    // fclose ($fp120);
+                    // echo $contenido120;
 
-            //         $fp200 = fopen($miniatura200, 'rb');
-            //         $contenido200 = fread($fp200, filesize($miniatura200));
-            //         fclose ($fp200);
-            //         echo $contenido200;
-            //         break; 
-            //     case 'image/jpeg':
-            //         header("Content-type: image/jpeg");
-            //         $fp120 = fopen($miniatura120, 'rb');
-            //         $contenido120 = fread($fp120, filesize($miniatura120));
-            //         fclose ($fp120);
-            //         echo $contenido120;
+                    // $fp200 = fopen($miniatura200, 'rb');
+                    // $contenido200 = fread($fp200, filesize($miniatura200));
+                    // fclose ($fp200);
+                    // echo $contenido200;
+                //     break; 
+                // case 'image/jpeg':
+                //     header("Content-type: image/jpeg");
+                    // $fp120 = fopen($miniatura120, 'rb');
+                    // $contenido120 = fread($fp120, filesize($miniatura120));
+                    // fclose ($fp120);
+                    // echo $contenido120;
 
-            //         $fp200 = fopen($miniatura200, 'rb');
-            //         $contenido200 = fread($fp200, filesize($miniatura200));
-            //         fclose ($fp200);
-            //         echo $contenido200;
-            //         break;  
-            //     default:
-            //         header("Content-type: image/png");
-            //         $fp120 = fopen($miniatura120, 'rb');
-            //         $contenido120 = fread($fp120, filesize($miniatura120));
-            //         fclose ($fp120);
-            //         echo $contenido120; 
-            //         echo "<br/>";
+                    // $fp200 = fopen($miniatura200, 'rb');
+                    // $contenido200 = fread($fp200, filesize($miniatura200));
+                    // fclose ($fp200);
+                    // echo $contenido200;
+                //     break;  
+                // default:
+                //     header("Content-type: image/png");
+                    // $fp120 = fopen($miniatura120, 'rb');
+                    // $contenido120 = fread($fp120, filesize($miniatura120));
+                    // fclose ($fp120);
+                    // echo $contenido120; 
 
-            //         $fp200 = fopen($miniatura200, 'rb');
-            //         $contenido200 = fread($fp200, filesize($miniatura200));
-            //         fclose ($fp200);
-            //         echo $contenido200;
+                    // $fp200 = fopen($miniatura200, 'rb');
+                    // $contenido200 = fread($fp200, filesize($miniatura200));
+                    // fclose ($fp200);
+                    // echo $contenido200;
             //         break;
             // } 
         } else {
@@ -142,9 +105,5 @@ require_once("fichero.php");
     } else {
         echo 'Error: posible ataque. Nombre: ' . $_FILES['imagen']['name'];
     }
-
+include_once("miniatura.php");
 ?> 
-    <p><img src= "muestra120.jpg" alt="Miniatura" /></p>
-    <p><img src="muestra200.jpg" alt="Miniatura" /></p>
-</body>
-</html>
