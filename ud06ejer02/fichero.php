@@ -13,5 +13,6 @@
         <input type="file" name="imagen" id="imagen">
         <input type="submit" value="Enviar">
     </form>
+
 </body>
 </html>
