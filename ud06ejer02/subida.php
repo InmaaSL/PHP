@@ -48,7 +48,7 @@
         if (move_uploaded_file($_FILES['imagen']['tmp_name'], $nombre))
         {
 
-            header("Location:fichero.php");
+            header("Location:ud06ejer02.php");
 
         } else {
             echo 'Error: No se puede mover el fichero a su destino.';
@@ -56,5 +56,5 @@
     } else {
         echo 'Error: posible ataque. Nombre: ' . $_FILES['imagen']['name'];
     }
-include_once("miniatura.php");
+include_once("funcionMiniatura.php");
 ?> 
