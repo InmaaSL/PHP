@@ -1,4 +1,9 @@
 <?php
+    //Imprime por pantalla los errores del código.     
+    ini_set('display_errors', 1);     
+    ini_set('display_startup_errors',1);     
+    error_reporting(E_ALL);
+    
 function miniatura($name_org, $name_dst, $ancho, $alto){
         // Separamos el nombre y la extensión en un array de 2 elementos
         $arrNombre = explode(".", $name_org);

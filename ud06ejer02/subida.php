@@ -1,4 +1,8 @@
 <?php
+    //Imprime por pantalla los errores del código.     
+    ini_set('display_errors', 1);     
+    ini_set('display_startup_errors',1);     
+    error_reporting(E_ALL);
 
     // Comprobamos si hay un error al subirlo
     if ($_FILES['imagen']['error'] != UPLOAD_ERR_OK) {
@@ -38,67 +42,14 @@
         {
             $nombre = time() . "_" .$nombre;
         } 
-
-        // $miniatura120 = "120_".$nombre;
-        // if (is_file($miniatura120)===true) 
-        // {
-        //     $miniatura120 = time() . "_" . $miniatura120;
-        // } 
-
-        // $miniatura200 = "200_".$nombre;
-        // if (is_file($miniatura200)===true) 
-        // {
-        //     $miniatura200 = time() . "_" . $miniatura200;
-        // }
         
         // Movemos el fichero a su nueva ubicación
         // move_uploaded_file ( string $filename , string $destination ) : bool
         if (move_uploaded_file($_FILES['imagen']['tmp_name'], $nombre))
         {
-            // Llamamos dos veces a la función
 
             header("Location:fichero.php");
 
-            // Mostramos el archivo gif subido
-            // $tipoImagen = $_FILES['imagen']['tmp_name'];
-            // switch ($tipoImagen) {
-            //     case 'image/gif':
-            //         header("Content-type: image/gif");
-                    // $fp120 = fopen($miniatura120, 'rb');
-                    // $contenido120 = fread($fp120, filesize($miniatura120));
-                    // fclose ($fp120);
-                    // echo $contenido120;
-
-                    // $fp200 = fopen($miniatura200, 'rb');
-                    // $contenido200 = fread($fp200, filesize($miniatura200));
-                    // fclose ($fp200);
-                    // echo $contenido200;
-                //     break; 
-                // case 'image/jpeg':
-                //     header("Content-type: image/jpeg");
-                    // $fp120 = fopen($miniatura120, 'rb');
-                    // $contenido120 = fread($fp120, filesize($miniatura120));
-                    // fclose ($fp120);
-                    // echo $contenido120;
-
-                    // $fp200 = fopen($miniatura200, 'rb');
-                    // $contenido200 = fread($fp200, filesize($miniatura200));
-                    // fclose ($fp200);
-                    // echo $contenido200;
-                //     break;  
-                // default:
-                //     header("Content-type: image/png");
-                    // $fp120 = fopen($miniatura120, 'rb');
-                    // $contenido120 = fread($fp120, filesize($miniatura120));
-                    // fclose ($fp120);
-                    // echo $contenido120; 
-
-                    // $fp200 = fopen($miniatura200, 'rb');
-                    // $contenido200 = fread($fp200, filesize($miniatura200));
-                    // fclose ($fp200);
-                    // echo $contenido200;
-            //         break;
-            // } 
         } else {
             echo 'Error: No se puede mover el fichero a su destino.';
         }
