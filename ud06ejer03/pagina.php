@@ -3,11 +3,6 @@
 
     if (!isset ($_SESSION['usuario'])){
     header("Location:login.php");
-    }else{
-        if (isset($_COOKIE['ultimoLogeo'])) {
-            $ultimoLogeo = $_COOKIE['ultimoLogeo'];
-        }
-        setcookie('ultimoLogeo', time(), time()+60*60*24*365);
     }
 ?>
 
@@ -55,12 +50,11 @@
         $titulo = $_GET['titulo'];
         $autor = $_GET['autor'];
         $paginas = $_GET['paginas'];
-        $foto = $imgContenido;
         $fecha = date("Y-m-d H:i:s");
 
         $sql = "INSERT INTO libros (titulo, autor, paginas, foto, creado) VALUES (?,?,?,?,?)";
         $resultado = $conexion->prepare($sql);
-        $resultado->bind_param("ssibs", $titulo, $autor, $paginas, $foto, $fecha);
+        $resultado->bind_param("ssibs", $titulo, $autor, $paginas, $imgContenido, $fecha);
         $resultado->execute();
         
         if($resultado){
@@ -114,7 +108,7 @@
     $sql = "SELECT id, titulo, autor, paginas, foto, creado FROM libros";
     $registros = mysqli_prepare($conexion, $sql);
     $registros->execute();
-    $registros->bind_result($id, $titulo, $autor, $paginas, $foto, $fecha);
+    $registros->bind_result($id, $titulo, $autor, $paginas, $imgContenido, $fecha);
 
 
 
@@ -134,7 +128,7 @@
 
         while ($registros->fetch())
         {
-            echo "<tr><td>" . $id . " </td><td>" . $titulo . " </td><td>". $autor ."</td><td> ". $paginas . "</td><td> ". $foto . "</td><td>". $fecha . "</td>";
+            echo "<tr><td>" . $id . " </td><td>" . $titulo . " </td><td>". $autor ."</td><td> ". $paginas . "</td><td><img src=img". . "></td><td>". $fecha . "</td>";
             if($_SESSION['administracion'] == 1){
                 echo "<td><a href='eliminar.php?id=$id'>Eliminar</a></td>";
             }
