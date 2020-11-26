@@ -14,11 +14,11 @@
     {
         // if(isset($_POST["submit"])){
             //Devolverá las dimensiones de un fichero.
-            $revisar = getimagesize($_FILES["image"]["tmp_name"]);
+            $revisar = getimagesize($_FILES["imagen"]["tmp_name"]);
 
             //Comprobamos si el usuario ha seleccionado alguna imagen
             if($revisar !== false){
-                $imagen = $_FILES["image"]["tmp_name"];
+                $imagen = $_FILES["imagen"]["tmp_name"];
                 //file_get_contents: Devuelve un fichero completo a una cadena
                 $imgContenido = addslashes(file_get_contents($imagen));
             }else{
