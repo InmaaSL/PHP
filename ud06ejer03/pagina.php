@@ -72,6 +72,9 @@ echo " <br> <a href='logout.php'>Cerrar Sesión</a>";
 
 <?php
 
+//Apartir de aquí no está comprobado, entiendo que falla porque está la imagen, pero mi problema actual reside en que la 
+//imagen no se sube a la base de datos.
+
     $sql = "SELECT id, titulo, autor, paginas, foto, creado FROM libros";
     $registros = mysqli_prepare($conexion, $sql);
     $registros->execute();

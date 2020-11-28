@@ -1,5 +1,6 @@
 <?php
     require_once("datosConexion.php");
+    require_once("pagina.php");
     $conexion = mysqli_connect($db_host, $db_usuario, $db_contrasena);
     
     if(mysqli_connect_errno()){
@@ -12,7 +13,7 @@
 
     if(!empty($_POST['autor']) && !empty($_POST['titulo']) && !empty($_POST['paginas'])) 
     {
-        // if(isset($_POST["submit"])){
+        if(isset($_POST["submit"])){
             //Devolverá las dimensiones de un fichero.
             $revisar = getimagesize($_FILES["imagen"]["tmp_name"]);
 
@@ -24,7 +25,7 @@
             }else{
             echo "Por favor selecciona imagen a subir.";
             }
-        // }
+        }
 
         $titulo = $_POST['titulo'];
         $autor = $_POST['autor'];
