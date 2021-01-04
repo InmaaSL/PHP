@@ -58,7 +58,6 @@
                 <td><label for="genero"> Género: </label></td>
                 <td><input type="radio" name="genero" value="hombre" <?php if(isset($_POST['genero'])) echo 'checked';?>> <label for="genero ">Masculino</label>  
                 <input type="radio" name="genero" value="mujer"> <label for="genero">Femenino</label></td>
-
                 <td> <?php if (isset($_POST['enviar']) && empty($_POST['genero'])) echo "<span style='color:red'> Debe seleccionar un género, por favor </span>"; ?> </td>
             </tr>
             <tr>
