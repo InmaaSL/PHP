@@ -9,6 +9,7 @@ require_once __DIR__ . '/../app/Controller.php';
 $map = array( 
 	'inicio' => array('controller' =>'Controller', 'action' => 'inicio'), 
 	'listar' => array('controller' =>'Controller', 'action' => 'listar'), 
+	'listarOrdenados' => array('controller' => 'Controller', 'action' => 'listarOrdenados'),
 	'insertar' => array('controller' =>'Controller', 'action' => 'insertar'), 
     'buscarPorNombre'=>array('controller' =>'Controller', 'action' => 'buscarPorNombre'),
     'buscarPorEnergia'=>array('controller' =>'Controller', 'action' => 'buscarPorEnergia'), 

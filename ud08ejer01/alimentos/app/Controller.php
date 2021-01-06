@@ -104,6 +104,61 @@ class Controller
         
         require __DIR__ . '/templates/buscarPorEnergia.php'; //vista de este apartado
     }
+	
+	//Acción para el apartado "ver alimentos ordenados"
+	//En $params tenemos un array alimentos, que llenamos llamando al método dameAlimentos de Model
+	public function listarOrdenados() 
+	{
+		$params = array('nombre' => '','alimentos' => array());
+		
+		$m = new Model(Config::$mvc_bd_hostname,Config::$mvc_bd_usuario,Config::$mvc_bd_clave,Config::$mvc_bd_nombre);
+		
+		@$ordenar = $_POST['ordenarPor']; 
+		@$sentido = $_POST['sentido'];
+
+		switch ($ordenar){
+			case 'nombre': 
+				$params['alimentos'] = $m->buscarAlimentosOrdenadosPorNombre($params['nombre']);
+	
+				switch ($sentido) {
+					case 'asc':
+						$params['alimentos'] = $m->buscarAlimentosOrdenadosAscNombre($params['nombre']);
+						break;
+					
+					default:
+						$params['alimentos'] = $m->buscarAlimentosOrdenadosDescNombre($params['nombre']);
+						break;
+				}
+				break;
+			case 'energia': 
+				@$params['alimentos'] = $m->buscarAlimentosOrdenadosPorEnergia($params['energia']);
+				switch ($sentido) {
+					case 'asc':
+						@$params['alimentos'] = $m->buscarAlimentosOrdenadosAscEnergia($params['energia']);
+						break;
+					
+					default:
+						@$params['alimentos'] = $m->buscarAlimentosOrdenadosDescEnergia($params['energia']);
+						break;
+				}
+				break;
+			default: 
+				@$params['alimentos'] = $m->buscarAlimentosOrdenadosPorGrasa($params['grasa']);
+				switch ($sentido) {
+					case 'asc':
+						@$params['alimentos'] = $m->buscarAlimentosOrdenadosAscGrasa($params['grasa']);
+						break;
+					
+					default:
+						@$params['alimentos'] = $m->buscarAlimentosOrdenadosDescGrasa($params['grasa']);
+						break;
+				}
+				break;
+		}
+		
+		require __DIR__ . '/templates/mostrarAlimentosOrdenados.php'; //vista de este apartado
+	} 
+
 }
 
 ?>

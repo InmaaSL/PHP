@@ -69,7 +69,6 @@ class Model
 	}
 	
 	/*************************************/
-	
 	//Esta es una pequeña función de validación que se ha usado para el formulario (podría mejorarse)
 	public function validarDatos($n, $e, $p, $hc, $f, $g) 
 	{
@@ -78,12 +77,74 @@ class Model
     }
     
     /**************************************/
-    	//Esta función obtiene los alimentos que contienen la cadena recibida, para el apartado "buscar por energia"
+    //Esta función obtiene los alimentos que contienen la cadena recibida, para el apartado "buscar por energia"
 	public function buscarAlimentosPorEnergia($energia) 
 	{
 		$sql = "select * from alimentos where energia like '%".$energia."%'"; 
 		return $this->devolverAlimentosSelect($sql); 
 	}
+
+	/***************************************/
+	//Estas funciones ordenarán las consultas según el nombre, la energía o la grasa: 
+		//Esta función obtiene los alimentos que contienen la cadena recibida, para el apartado "buscar por nombre"
+		public function buscarAlimentosOrdenadosPorNombre($nombre) 
+		{
+			$sql = "select * from alimentos order by nombre"; 
+			return $this->devolverAlimentosSelect($sql); 
+
+		}
+		public function buscarAlimentosOrdenadosPorEnergia($energia) 
+		{
+			$sql = "select * from alimentos order by energia"; 
+			return $this->devolverAlimentosSelect($sql); 
+			
+		}
+		public function buscarAlimentosOrdenadosPorGrasa($grasa) 
+		{
+			$sql = "select * from alimentos order by grasatotal"; 
+			return $this->devolverAlimentosSelect($sql); 
+		}
+
+	/***************************************/
+	//Estas funciones ordenarán las consultas de forma ascendente o descendente: 
+	//Esta función obtiene los alimentos que contienen la cadena recibida, para el apartado "buscar por nombre"
+
+		public function buscarAlimentosOrdenadosAscNombre($nombre) 
+		{
+			$sql = "select * from alimentos order by nombre asc"; 
+			return $this->devolverAlimentosSelect($sql); 
+		}
+
+		public function buscarAlimentosOrdenadosDescNombre($nombre) 
+		{
+			$sql = "select * from alimentos order by nombre desc"; 
+			return $this->devolverAlimentosSelect($sql); 
+		}
+
+		public function buscarAlimentosOrdenadosAscGrasa($grasa) 
+		{
+			$sql = "select * from alimentos order by grasatotal asc"; 
+			return $this->devolverAlimentosSelect($sql); 
+		}
+
+		public function buscarAlimentosOrdenadosDescGrasa($grasa) 
+		{
+			$sql = "select * from alimentos order by grasatotal desc"; 
+			return $this->devolverAlimentosSelect($sql); 
+		}
+
+		public function buscarAlimentosOrdenadosAscEnergia($energia) 
+		{
+			$sql = "select * from alimentos order by energia asc"; 
+			return $this->devolverAlimentosSelect($sql); 
+		}
+
+		public function buscarAlimentosOrdenadosDescEnergia($energia) 
+		{
+			$sql = "select * from alimentos order by energia desc"; 
+			return $this->devolverAlimentosSelect($sql); 
+		}
+
 }
 
 ?>
