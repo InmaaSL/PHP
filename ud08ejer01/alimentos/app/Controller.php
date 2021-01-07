@@ -159,6 +159,32 @@ class Controller
 		require __DIR__ . '/templates/mostrarAlimentosOrdenados.php'; //vista de este apartado
 	} 
 
+	//Acción para el apartado "eliminar por nombre"
+	//En $params tenemos un campo para el input del nombre, y un array resultado que llenamos llamando al método eliminarPorNombre de Model
+    public function eliminarPorNombre()
+    { 
+
+		$params = array('nombre' => '','mensaje' => NULL);
+		
+		$m = new Model(Config::$mvc_bd_hostname,Config::$mvc_bd_usuario,Config::$mvc_bd_clave,Config::$mvc_bd_nombre);
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+		{
+			if ($m->validarDatosNombre($_POST['nombre'])) 
+			{ 
+				$m->eliminarPorNombre($_POST['nombre']);
+				header('Location: index.php?ruta=listar'); 
+			} 
+			else 
+			{ 
+				$params['nombre'] = $_POST['nombre'];
+				$params['mensaje'] = 'No se ha eliminar el alimento. Revisa el formulario'; 
+			}
+		}
+		
+		require __DIR__ . '/templates/eliminarPorNombre.php'; //vista de este apartado
+    }
+
 }
 
 ?>

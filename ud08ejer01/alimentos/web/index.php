@@ -13,7 +13,8 @@ $map = array(
 	'insertar' => array('controller' =>'Controller', 'action' => 'insertar'), 
     'buscarPorNombre'=>array('controller' =>'Controller', 'action' => 'buscarPorNombre'),
     'buscarPorEnergia'=>array('controller' =>'Controller', 'action' => 'buscarPorEnergia'), 
-	'ver' => array('controller' =>'Controller', 'action' => 'ver') 
+	'ver' => array('controller' =>'Controller', 'action' => 'ver'),
+	'eliminarPorNombre' => array('controller' =>'Controller', 'action' => 'eliminarPorNombre') 
 );
 
 // Parseo de la ruta 

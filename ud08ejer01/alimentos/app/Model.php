@@ -74,6 +74,10 @@ class Model
 	{
 		return (is_string($n) & is_numeric($e) & is_numeric($p) & 
 				is_numeric($hc) & is_numeric($f) & is_numeric($g)); 
+	}
+	public function validarDatosNombre($n) 
+	{
+		return (is_string($n)); 
     }
     
     /**************************************/
@@ -145,6 +149,13 @@ class Model
 			return $this->devolverAlimentosSelect($sql); 
 		}
 
+	/***************************************/
+	//Estas funciones elimina el alimento seleccionado: 
+	public function eliminarPorNombre($nombre) 
+	{
+		$sql = "DELETE FROM alimentos WHERE nombre = '$nombre'";  
+		return $this->consultaQueNoDevuelveDatos($sql); 
+	}
 }
 
 ?>
