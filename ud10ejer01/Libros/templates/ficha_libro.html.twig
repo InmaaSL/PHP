@@ -1,0 +1,15 @@
+{% extends 'layaout.html.twig' %}
+
+{% block title %}Libros{% endblock %}
+{% block body %}
+<h1>Ficha de libro:</h1>
+{% if libros %}
+        <ul>
+            <li><strong>{{ libros.titulo }}</strong></li>
+            <li><strong>E-mail</strong>: {{ libros.autor }}</li>
+            <li><strong>E-mail</strong>: {{ libros.paginas }}</li>
+        </ul>
+{% else %}
+<p>Libro no encontrado</p>
+{% endif %}
+{% endblock %}

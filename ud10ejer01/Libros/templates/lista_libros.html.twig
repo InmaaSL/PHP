@@ -1,0 +1,16 @@
+{% extends 'layaout.html.twig' %}
+
+{% block body %}
+<h1>Listado de libros:</h1>
+{% if libros %}
+    <ul>
+    {% for libro in libros %}
+            <li><strong>{{ libro.titulo }}</strong></li>  
+    {% endfor%}
+    </ul>
+{% else %}
+
+<p>No hay libros en la base de datos</p>
+{% endif %}
+
+{% endblock %}
