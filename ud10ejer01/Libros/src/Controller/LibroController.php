@@ -7,9 +7,7 @@
 
     class LibroController extends AbstractController
     {        
-        /**
-        * @Route("/libros", name="lista_libros")
-        */
+
         private $libros = array(
             array("isbn" => "A001", "titulo" => "Jarry Choped", "autor" => "JK
             Bowling", "paginas" => 100),
@@ -20,18 +18,17 @@
             array("isbn" => "A004", "titulo" => "Los juegos de enjambre", "autor"
             => "Suzanne Collonins", "paginas" => 400)
             );
-
-        public function libros()
+            
+        /**
+        * @Route("/libros", name="lista_libros")
+        */
+        public function lista()
         {
-            $libros = NULL;
-            foreach ($this->libros as $lib){
-                $libros = $lib;
-            }
-            return $this->render('lista_libros.html.twig', array('libros' => $libros));
+            return $this->render('lista_libros.html.twig', array('libros' => $this->libros));
         }
 
         /**
-        * @Route("/libro/{isbn}", name="ficha_libro")
+        * @Route("/libros/{isbn}", name="ficha_libro")
         */
         public function ficha($isbn)
         {
@@ -42,8 +39,6 @@
             }
             return $this->render('ficha_libro.html.twig', array('libros' => $libros));
         }
-
-        
 
     }
 ?>
