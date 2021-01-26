@@ -96,7 +96,10 @@
         * @Route("/libros/paginas/{paginas}", name="lista_libros_paginas")
         */
         public function filtrarPaginas($paginas){
-            
+            $repositorio = $this->getDoctrine()->getRepository(Libro::class);
+            $resultado = $repositorio->nPaginas($paginas);
+
+            return $this->render('lista_libros_paginas.html.twig', array('libros' => $resultado));
         }
 
 

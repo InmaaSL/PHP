@@ -19,6 +19,21 @@ class LibroRepository extends ServiceEntityRepository
         parent::__construct($registry, Libro::class);
     }
 
+    /**
+    * @return Libro[] Returns an array of Libro objects
+    **/
+    
+    public function npaginas($paginas): array
+    {
+        return $this->createQueryBuilder('lib')
+            ->andWhere('lib.paginas <= :paginas')
+            ->setParameter('paginas', $paginas)
+            ->orderBy('lib.isbn', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+
     // /**
     //  * @return Libro[] Returns an array of Libro objects
     //  */

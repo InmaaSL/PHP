@@ -10,7 +10,7 @@
             {% if libros %}
                 <ul>
                 {% for libro in libros %}
-                        <li> <a href="{{ path('ficha_libro',{'isbn':libro.isbn}) }}"><strong> {{ libro.titulo }} </strong></a> <a href="{{ path('eliminar_libro', {'isbn':libro.isbn}) }}"> Eliminar </a></li>  
+                        <li> <a href="{{ path('ficha_libro',{'isbn':libro.isbn}) }}"><strong> {{ libro.titulo }} </strong></a> - <a href="{{ path('eliminar_libro', {'isbn':libro.isbn}) }}"> Eliminar </a></li>  
                         
                 {% endfor %}
                 </ul>
